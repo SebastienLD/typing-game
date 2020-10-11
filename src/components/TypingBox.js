@@ -19,7 +19,7 @@ class TypingBox extends React.Component {
         charIndex: 0,
         spellCheck: "success", 
         textInput: {},
-        time: 5
+        time: 20
     }
 
     constructor(props) {
@@ -30,8 +30,16 @@ class TypingBox extends React.Component {
         for(let i = 0; i< this.textArry.length; i++){
             this.coloredText.push({word:this.textArry[i], color:"#FF00FF"}); 
         }
+    }
 
-        //this.coloredText = this.checkText(this.ColoredText, this.textInput) 
+    getErrors = (textInput, textArry) => {
+        let currErrors = 0
+        for (let i = 0; i < textInput.length - 1; i++) {
+            if (textInput[i] !== textArry[i]) {
+                currErrors += 1;
+            }
+        }
+        return currErrors;
     }
 
     checkText = (textInput, textArry) => {
@@ -42,19 +50,17 @@ class TypingBox extends React.Component {
                     if (i === textInput.length - 1) {
                         this.coloredText[i].color = "#FFFF00";
                     } else {
-                        this.coloredText[i].color = "#FF0000"
+                        this.coloredText[i].color = "#FF0000";
                     }
                 } else {
                     this.coloredText[i].color = "#000000"
                 }
-                
             }
             else {
                 this.coloredText[i].color = "#000000";
             }
         }
         return this.coloredText;
-
     }
 
     interval = null;
@@ -89,12 +95,8 @@ class TypingBox extends React.Component {
     }
     
     handleButtonClick = (event) => {
-
-        
-
+        this.setState(this.initialState);
     }
-
-    
 
     render = () => {
         if (this.state.gameState === 0) {
@@ -112,12 +114,18 @@ class TypingBox extends React.Component {
                             </Form.Text>
                         </Form.Group>
                     </Form>
-                    <Button onClick={this.handleButtonClick}>Click to begin</Button>
+                    
                 </Container>
             )
         } else {
             return <div>
-                <h1>Bravo</h1>
+                <h1 className = "mb-3">Game Over!</h1>
+                <Button onClick={this.handleButtonClick} className = "mb-3">Click to play again!</Button>
+                <Container>
+                    <p>WMP: {this.state.textInput.length / (this.initialState.time / 60)}</p>
+                    <p>Errors: {this.getErrors(this.state.textInput, this.textArry)}</p>
+                </Container>
+                
             </div>         
         }
        
