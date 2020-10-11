@@ -5,11 +5,12 @@ import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert"
 import { Button, Container } from "react-bootstrap";
 import ColoredText from "./ColoredText.js";
+import {FairyTales} from "./FairyTales.js";
 
 class TypingBox extends React.Component {
 
-    text = "This is what the player will have to type really quickly so that they can look really cool and impress all of their friends by having a word per minute speed that is litteraly faster than the speed of light, do you dig it? ";
-    textArry = this.text.split(" ");
+    //text = "This is what the player will have to type really quickly so that they can look really cool and impress all of their friends by having a word per minute speed that is litteraly faster than the speed of light, do you dig it? ";
+    
 
     initialState = {
         gameState: 0,
@@ -19,16 +20,17 @@ class TypingBox extends React.Component {
         charIndex: 0,
         spellCheck: "success", 
         textInput: {},
-        time: 10
+        time: 10,
     }
 
     constructor(props) {
         super(props);
 
+        console.log(FairyTales[0])
         this.state = this.initialState;
         this.coloredText = [];
-        for(let i = 0; i< this.textArry.length; i++){
-            this.coloredText.push({word:this.textArry[i], color:"#FF00FF"}); 
+        for(let i = 0; i< this.state.textArry.length; i++){
+            this.coloredText.push({word:this.state.textArry[i], color:"#FF00FF"}); 
         }
     }
 
@@ -104,7 +106,7 @@ class TypingBox extends React.Component {
                 <Container>
                     <h1 className = "mb-5">{this.state.time} seconds left</h1>
                     <Alert variant={this.state.spellCheck} className = "mb-5">
-                        <ColoredText coloredText={this.checkText(this.state.textInput, this.textArry)}></ColoredText>
+                        <ColoredText coloredText={this.checkText(this.state.textInput, this.state.textArry)}></ColoredText>
                     </Alert>
                     <Form>
                         <Form.Group>
@@ -123,7 +125,7 @@ class TypingBox extends React.Component {
                 <Button onClick={this.handleButtonClick} className = "mb-3">Click to play again!</Button>
                 <Container>
                     <p>WMP: {(this.state.textInput.length - 1) / (this.initialState.time / 60)}</p>
-                    <p>Accuracy: {(this.state.textInput.length - 1 - this.getErrors(this.state.textInput, this.textArry)) / (this.state.textInput.length - 1) * 100} %</p>
+                    <p>Accuracy: {((this.state.textInput.length - 1 - this.getErrors(this.state.textInput, this.state.textArry)) / (this.state.textInput.length - 1) * 100).toFixed(2)} %</p>
                 </Container>
                 
             </div>         
