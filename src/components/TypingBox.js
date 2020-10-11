@@ -19,7 +19,7 @@ class TypingBox extends React.Component {
         charIndex: 0,
         spellCheck: "success", 
         textInput: {},
-        time: 20
+        time: 10
     }
 
     constructor(props) {
@@ -122,8 +122,8 @@ class TypingBox extends React.Component {
                 <h1 className = "mb-3">Game Over!</h1>
                 <Button onClick={this.handleButtonClick} className = "mb-3">Click to play again!</Button>
                 <Container>
-                    <p>WMP: {this.state.textInput.length / (this.initialState.time / 60)}</p>
-                    <p>Errors: {this.getErrors(this.state.textInput, this.textArry)}</p>
+                    <p>WMP: {(this.state.textInput.length - 1) / (this.initialState.time / 60)}</p>
+                    <p>Accuracy: {(this.state.textInput.length - 1 - this.getErrors(this.state.textInput, this.textArry)) / (this.state.textInput.length - 1) * 100} %</p>
                 </Container>
                 
             </div>         
