@@ -6,6 +6,7 @@ import Alert from "react-bootstrap/Alert"
 import { Button, Container } from "react-bootstrap";
 import ColoredText from "./ColoredText.js";
 import {FairyTales} from "./FairyTales.js";
+import Jumbotron from 'react-bootstrap/Jumbotron';
 
 
 class TypingBox extends React.Component {
@@ -24,7 +25,7 @@ class TypingBox extends React.Component {
         charIndex: 0,
         spellCheck: "success", 
         textInput: {},
-        time: 10,
+        time: 60,
         textObject: FairyTales[this.getRandomInt(FairyTales.length)]
     }
 
@@ -110,7 +111,7 @@ class TypingBox extends React.Component {
             charIndex: 0,
             spellCheck: "success", 
             textInput: {},
-            time: 10,
+            time: 60,
             textObject: randObj
         });
         var currArry = randObj.text.split(" "); 
@@ -127,6 +128,7 @@ class TypingBox extends React.Component {
         if (this.state.gameState === 0) {
             return (                   
                 <Container>
+                    <h1 className = "mb-5">Welcome to Fable Typer</h1>
                     <h1 className = "mb-5">{this.state.time} seconds left</h1>
                     <Alert variant={this.state.spellCheck} >
                         <ColoredText coloredText={this.checkText(this.state.textInput, this.state.textObject.text.split(" "))}></ColoredText>
@@ -134,13 +136,14 @@ class TypingBox extends React.Component {
                     <h2 className = "mb-5">{this.state.textObject.name}</h2>
                     <Form>
                         <Form.Group>
-                            <Form.Control type = "textarea" placeholder = "Type here!" onChange={this.handleTextInput} />
+                            <Form.Control type = "textarea" placeholder = "Type here to start the clock!" onChange={this.handleTextInput} />
                             <Form.Text className = "text-muted">
-                                You will have 60 seconds once the test begins.
+                                You will have {this.initialState.time} seconds once the test begins.
                             </Form.Text>
                             
                         </Form.Group>
                     </Form>
+                    <h4>Built by Sebastien L.D.</h4>
                     
                 </Container>
             )
@@ -149,7 +152,7 @@ class TypingBox extends React.Component {
                 <h1 className = "mb-3">Game Over!</h1>
                 <Button onClick={this.handleButtonClick} className = "mb-3">Click to play again!</Button>
                 <Container>
-                    <p>WMP: {(this.state.textInput.length - 1) / (this.initialState.time / 60)}</p>
+                    <p>Words Per Minute: {(this.state.textInput.length - 1) / (this.initialState.time / 60)}</p>
                     <p>Accuracy: {((this.state.textInput.length - 1 - this.getErrors(this.state.textInput, this.state.textObject.text.split(" "))) / (this.state.textInput.length - 1) * 100).toFixed(2)} %</p>
                 </Container>
                 

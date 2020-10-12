@@ -2,9 +2,6 @@ import React from 'react';
 import './App.css';
 import TypingBox from './components/TypingBox'; 
 
-const gameLength = 60; 
-
-
 class App extends React.Component {
  
   render() {
